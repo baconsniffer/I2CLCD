@@ -18,59 +18,59 @@
 /// ChangeLog:
 /// --------
 /// * 19.10.2013 created.
-/// * 05.06.2019 rewrite from scratch.
+/// * 05.06.2019 rewrite from scratch
 /// * 21.10.2019 PJ Improved readability, print works
 
 #ifndef I2CLCD_h
 #define I2CLCD_h
 
 #include "Arduino.h"
-#include "Print.h"
+#include "Print.h
 #include <inttypes.h>
 #include <stddef.h>
 #include <stdint.h>
 
-// commands
-#define LCD_CLEARDISPLAY 0x01
-#define LCD_RETURNHOME 0x02
-#define LCD_ENTRYMODESET 0x04
-#define LCD_DISPLAYCONTROL 0x08
-#define LCD_CURSORSHIFT 0x10
-#define LCD_FUNCTIONSET 0x20
-#define LCD_SETCGRAMADDR 0x40
-#define LCD_SETDDRAMADDR 0x80
+// command
+#define LCD_CLEARDISPLAY 0x0
+#define LCD_RETURNHOME 0x0
+#define LCD_ENTRYMODESET 0x0
+#define LCD_DISPLAYCONTROL 0x0
+#define LCD_CURSORSHIFT 0x1
+#define LCD_FUNCTIONSET 0x2
+#define LCD_SETCGRAMADDR 0x4
+#define LCD_SETDDRAMADDR 0x8
 
-// flags for display entry mode
-#define LCD_ENTRYRIGHT 0x00
-#define LCD_ENTRYLEFT 0x02
-#define LCD_ENTRYSHIFTINCREMENT 0x01
-#define LCD_ENTRYSHIFTDECREMENT 0x00
+// flags for display entry mod
+#define LCD_ENTRYRIGHT 0x0
+#define LCD_ENTRYLEFT 0x0
+#define LCD_ENTRYSHIFTINCREMENT 0x0
+#define LCD_ENTRYSHIFTDECREMENT 0x0
 
-// flags for display on/off control
-#define LCD_DISPLAYON 0x04
-#define LCD_DISPLAYOFF 0x00
-#define LCD_CURSORON 0x02
-#define LCD_CURSOROFF 0x00
-#define LCD_BLINKON 0x01
-#define LCD_BLINKOFF 0x00
+// flags for display on/off contro
+#define LCD_DISPLAYON 0x0
+#define LCD_DISPLAYOFF 0x0
+#define LCD_CURSORON 0x0
+#define LCD_CURSOROFF 0x0
+#define LCD_BLINKON 0x0
+#define LCD_BLINKOFF 0x0
 
-// flags for display/cursor shift
-#define LCD_DISPLAYMOVE 0x08
-#define LCD_CURSORMOVE 0x00
-#define LCD_MOVERIGHT 0x04
-#define LCD_MOVELEFT 0x00
+// flags for display/cursor shif
+#define LCD_DISPLAYMOVE 0x0
+#define LCD_CURSORMOVE 0x0
+#define LCD_MOVERIGHT 0x0
+#define LCD_MOVELEFT 0x0
 
-// flags for function set
-#define LCD_2LINE 0x08
-#define LCD_1LINE 0x00
-#define LCD_5x10DOTS 0x04
+// flags for function se
+#define LCD_2LINE 0x0
+#define LCD_1LINE 0x0
+#define LCD_5x10DOTS 0x0
 #define LCD_5x8DOTS 0x00
 
 class I2CLCD : public Print {
 public:
-  I2CLCD(uint8_t i2cAddr);
-/* Constructor to include support for soft i2c, calls Wire.begin(sda_pin, scl_pin)
-  I2CLCD(uint8_t i2cAddr, uint8_t sda_pin, uint8_t scl_pin);
+  I2CLCD(uint8_t i2cAddr)
+/* Constructor to include support for soft i2c, calls Wire.begin(sda_pin, scl_pin
+  I2CLCD(uint8_t i2cAddr, uint8_t sda_pin, uint8_t scl_pin)
 */
   // note:
   // There is no sda and scl parameter for i2c in any api.
@@ -98,6 +98,11 @@ public:
   void noAutoscroll();
   void autoscroll();
 
+  inline void blink_on() { blink(); }
+  inline void blink_off() { noBlink(); }
+  inline void cursor_on() { cursor(); }
+  inline void cursor_off() { noCursor(); }
+
   void createChar(uint8_t, uint8_t[]);
   void setCursor(uint8_t col, uint8_t row);
 
@@ -111,15 +116,15 @@ public:
 private:
   // instance variables
   uint8_t _i2cAddr; ///< Wire Address of the LCD
-  uint8_t _backlight; ///< the backlight intensity
+  uint8_t _backlight; ///< the backlight intensit
   uint8_t _cols; ///< number of columns in display
   uint8_t _lines; ///< number of lines of the display
   uint8_t _entrymode; ///<flags from entrymode
-  uint8_t _displaycontrol; ///<flags from displaycontrol
+  uint8_t _displaycontrol; ///<flags from displaycontro
   uint8_t _row_offsets[4]; ///< Internal two start offsets
 
-  // internal functions
-  //void setRowOffsets(int row1, int row2, int row3, int row4);
+  // internal function
+  //void setRowOffsets(int row1, int row2, int row3, int row4)
 
   // low level functions
   void _send(int value, bool isData = false);
