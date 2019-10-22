@@ -130,6 +130,7 @@ private:
   void _send(int value, bool isData = false);
   void _sendNibble(int halfByte, bool isData = false);
   void _write2Wire(int halfByte, bool isData, bool enable);
+
 };
 
 #endif
