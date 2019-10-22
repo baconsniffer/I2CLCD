@@ -2,7 +2,7 @@
 /// \brief LiquidCrystal library with PCF8574 I2C adapter.
 ///
 /// \author Matthias Hertel, http://www.mathertel.de
-/// \copyright Copyright (c) 2019 by Matthias Hertel.
+/// \copyright Copyright (c) 2019 by Matthias Hertel
 /// \changelog Update 2019-10-21 by SnifferJ
 ///
 /// ChangeLog see: I2CLCD.h
@@ -36,25 +36,25 @@ void I2CLCD::begin(uint8_t cols, uint8_t lines, uint8_t dotsize) {
   _cols = cols;
   _lines = lines;
 
-  _row_offsets[0] = 0x00; _row_offsets[1] = 0x40;
-  _row_offsets[2] = 0x00 + _cols; _row_offsets[3] = 0x40 + _cols;
+  _row_offsets[0] = 0x00; _row_offsets[1] = 0x40
+  _row_offsets[2] = 0x00 + _cols; _row_offsets[3] = 0x40 + _cols
 
-  uint8_t functionFlags = 0;
+  uint8_t functionFlags = 0
 
 
   if (lines > 1) {
     functionFlags |= LCD_2LINE;
-  }
+  
 
-  // some 1 line displays can select a 10 pixel high font
-  if ((dotsize != LCD_5x8DOTS) && (_lines == 1)) {
-    functionFlags |= LCD_5x10DOTS;
-  }
+  // some 1 line displays can select a 10 pixel high fon
+  if ((dotsize != LCD_5x8DOTS) && (_lines == 1)) 
+    functionFlags |= LCD_5x10DOTS
+  
 
   // initializing the display
   Wire.begin();
-  _write2Wire(0x00, LOW, false);
-  // according to datasheet, we need at least 40ms after power rises above 2.7V
+  _write2Wire(0x00, LOW, false)
+  // according to datasheet, we need at least 40ms after power rises above 2.7
   // before sending commands. Arduino can turn on way before 4.5V so we'll wait 50
   delayMicroseconds(50000);
 
@@ -75,9 +75,9 @@ void I2CLCD::begin(uint8_t cols, uint8_t lines, uint8_t dotsize) {
   _send(LCD_FUNCTIONSET | functionFlags);
 
   display();       // Display on
-  clear();         // Display clear
+  clear();         // Display clea
   // Initialize to default text direction (for romance languages)
-  _send(LCD_ENTRYMODESET | _entrymode);
+  _send(LCD_ENTRYMODESET | _entrymode)
 
 } // begin()
 
@@ -103,14 +103,14 @@ void I2CLCD::home() {
 
 /// Set the cursor to a new position.
 void I2CLCD::setCursor(uint8_t col, uint8_t row) {
-  //int row_offsets[] = {0x00, 0x40, 0x14, 0x54};
-  const size_t max_lines = sizeof(_row_offsets) / sizeof(*_row_offsets);
-  if ( row >= max_lines ) {
-    row = max_lines - 1;    // we count rows starting w/0
-  }
-  if ( row >= _lines ) {
-    row = _lines - 1;    // we count rows starting w/0
-  }
+  //int row_offsets[] = {0x00, 0x40, 0x14, 0x54}
+  const size_t max_lines = sizeof(_row_offsets) / sizeof(*_row_offsets)
+  if ( row >= max_lines ) 
+    row = max_lines - 1;    // we count rows starting w/
+  
+  if ( row >= _lines ) 
+    row = _lines - 1;    // we count rows starting w/
+  
 
   _send(LCD_SETDDRAMADDR | (_row_offsets[row] + col));
 } // setCursor()
